@@ -1,4 +1,4 @@
 RAFReader
 =========
 
-Can extract RAF files and display models.
+A small program that can extract RAF files and display the models with their textures.
