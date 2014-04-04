@@ -31,7 +31,7 @@ GLFWwindow* window;
 
 int main(int argc, char const *argv[])
 {
-	
+	/*
 	Config c("settings.cfg");
 	c.LoadConfig();
 
@@ -39,18 +39,18 @@ int main(int argc, char const *argv[])
 
 	RAFManager *raf = RAFManager::getInstance();
 	raf->extractAllRAF(s.c_str());
+	*/
 	
-	/*
     if (!glfwInit())
         return -1;
 
-    window = glfwCreateWindow(800, 600, "Model Viewer", NULL, NULL);
+	window = glfwCreateWindow(800, 600, "Model Viewer", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
         return -1;
     }
-
+	
 	glfwMakeContextCurrent(window);
 
     glewExperimental = true;
@@ -61,7 +61,6 @@ int main(int argc, char const *argv[])
     glEnable(GL_CULL_FACE);
 
 	Renderer *renderer = new Renderer();
-	renderer->SetViewMatrix(glm::lookAt(glm::vec3(0, 200, 200), glm::vec3(0, 100, 0), glm::vec3(0, 1, 0)));
 
     GLuint textureID = SOIL_load_OGL_texture("Ahri_base_TX_CM.dds", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
 	Model m = parseSKNFromFile("Ahri.skn");
@@ -73,7 +72,7 @@ int main(int argc, char const *argv[])
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		
+		renderer->SetViewMatrix(camera.getView());
 		renderer->RenderModel(&m);
 
         glfwSwapBuffers(window);
@@ -81,10 +80,7 @@ int main(int argc, char const *argv[])
     }
 
     glfwTerminate();
-	*/
-
-	system("pause");
-
+	
     return 0;
 }
 
