@@ -85,7 +85,6 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelParser.cpp" />
     <ClCompile Include="RAFManager.cpp" />
-    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
@@ -96,7 +95,6 @@
     <ClInclude Include="ModelParser.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="RAFManager.h" />
-    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>

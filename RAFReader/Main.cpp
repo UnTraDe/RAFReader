@@ -11,7 +11,6 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Config.h"
-#include "Renderer.h"
 /*
 #pragma comment(lib, "zlibstat.lib")
 #pragma comment(lib, "libboost_filesystem-vc110-mt-gd-1_50.lib")
@@ -60,11 +59,13 @@ int main(int argc, char const *argv[])
     glDepthFunc(GL_LESS);
     glEnable(GL_CULL_FACE);
 
-	Renderer *renderer = new Renderer();
-
-    GLuint textureID = SOIL_load_OGL_texture("Ahri_base_TX_CM.dds", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
-	Model m = parseSKNFromFile("Ahri.skn");
+    GLuint textureID = SOIL_load_OGL_texture("resources/Ahri_base_TX_CM.dds", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+	Model m = parseSKNFromFile("resources/Ahri.skn");
 	m.ApplyTexture(textureID);
+
+	glm::mat4 projection = glm::perspective(45.0f, 1024.0f / 768.0f, 0.1f, 1000.0f);
+
+	Shader shader("resources/shaders/vertex.vert", "resources/shaders/fragment.frag");
 
     while (!glfwWindowShouldClose(window))
     {
@@ -72,8 +73,7 @@ int main(int argc, char const *argv[])
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		renderer->SetViewMatrix(camera.getView());
-		renderer->RenderModel(&m);
+		m.Render(projection, camera.getView(), shader);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

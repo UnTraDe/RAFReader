@@ -1,41 +1,37 @@
 #pragma once
 
+#include <vector>
 #include <GL/glew.h>
 #include <gl/GL.h>
 #include <glm\glm.hpp>
-#include <vector>
 #include "Objects.h"
+#include "Shader.h"
 
 class Model
 {
 public:
 	Model(std::vector<Vertex> vertices, std::vector<short> indices);
 	Model(std::vector<Vertex> vertices, std::vector<short> indices, std::vector<Bone> bones);
+	Model(std::vector<Vertex> vertices, std::vector<short> indices, std::vector<Bone> bones, GLuint textureID);
 	~Model();
 
-	void ApplyTexture(GLuint texture) { mTextureID = texture; mIsTextured = true; };
-
-	void SetBones(std::vector<Bone> bones) { mBones = bones; }
-
-	glm::mat4 GetMatrix() { return mMatrix; }
-	GLuint GetVertexBuffer() { return mVertexBuffer; }
-	GLuint GetIndiceBuffer() { return mIndiceBuffer; }
-	int GetIndiceSize() { return mIndices.size(); }
-	GLuint GetTexture() { return mTextureID; };
-	bool IsTextured() { return mIsTextured; };
+	void ApplyTexture(GLuint texture) { m_TextureID = texture; m_IsTextured = true; };
+	void SetBones(std::vector<Bone> bones) { m_Bones = bones; }
+	void Render(const glm::mat4& projection, const glm::mat4& view, Shader& shader);
 	
 private:
-	std::vector<Vertex> mVertices;
-    std::vector<short> mIndices;
-	std::vector<Bone> mBones;
+	std::vector<Vertex> m_Vertices;
+    std::vector<short> m_Indices;
+	std::vector<Bone> m_Bones;
 	
-	glm::mat4 mMatrix;
+	glm::mat4 m_Matrix;
 
-	GLuint mVertexBuffer;
-	GLuint mIndiceBuffer;
-	GLuint mTextureID;
+	GLuint m_Vao;
+	GLuint m_Vbo;
+	GLuint m_IndiceBuffer;
+	GLuint m_TextureID;
 
-	bool mIsTextured;
+	bool m_IsTextured;
 
 	void Initialize();
 };
