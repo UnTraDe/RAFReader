@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RAFReader", "RAFReader\RAFReader.vcxproj", "{D809CA27-6C2A-43E9-81DF-4FCDEE69E067}"
+	ProjectSection(ProjectDependencies) = postProject
+		{10B75485-B386-4AAA-85C2-A9E16012EFD9} = {10B75485-B386-4AAA-85C2-A9E16012EFD9}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RAFFile", "RAFFile\RAFFile.vcxproj", "{10B75485-B386-4AAA-85C2-A9E16012EFD9}"
 EndProject
