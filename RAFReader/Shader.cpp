@@ -76,13 +76,19 @@ bool Shader::load(const char *pathVertex, const char *pathFragment)
     GLint Result;
     GLint InfoLogLength;
 
-    glGetShaderiv(fragmentShaderObj, GL_COMPILE_STATUS, &Result);
-    glGetShaderiv(fragmentShaderObj, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	glGetShaderiv(vertexShaderObj, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(vertexShaderObj, GL_INFO_LOG_LENGTH, &InfoLogLength);
     std::vector<char> VertexShaderErrorMessage(InfoLogLength);
-    glGetShaderInfoLog(fragmentShaderObj, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+	glGetShaderInfoLog(vertexShaderObj, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
     fprintf(stdout, "%s\n", &VertexShaderErrorMessage[0]);
 
     glCompileShader(fragmentShaderObj);
+
+	glGetShaderiv(fragmentShaderObj, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(fragmentShaderObj, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
+	glGetShaderInfoLog(fragmentShaderObj, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
+	fprintf(stdout, "%s\n", &FragmentShaderErrorMessage[0]);
 
     glAttachShader(program, vertexShaderObj);
     glAttachShader(program, fragmentShaderObj);

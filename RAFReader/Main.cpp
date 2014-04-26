@@ -11,6 +11,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Config.h"
+#include "Animation.h"
 /*
 #pragma comment(lib, "zlibstat.lib")
 #pragma comment(lib, "libboost_filesystem-vc110-mt-gd-1_50.lib")
@@ -30,16 +31,6 @@ GLFWwindow* window;
 
 int main(int argc, char const *argv[])
 {
-	/*
-	Config c("settings.cfg");
-	c.LoadConfig();
-
-	string s = c.GetValueString("GameDirectory");
-
-	RAFManager *raf = RAFManager::getInstance();
-	raf->extractAllRAF(s.c_str());
-	*/
-	
     if (!glfwInit())
         return -1;
 
@@ -61,11 +52,19 @@ int main(int argc, char const *argv[])
 
     GLuint textureID = SOIL_load_OGL_texture("resources/Ahri_base_TX_CM.dds", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
 	Model m = parseSKNFromFile("resources/Ahri.skn");
+	Skeleton s = parseSKLFromFile("resources/Ahri.skl");
+	m.SetSkeleton(&s);
 	m.ApplyTexture(textureID);
+
+	Animation anm = parseANMFromFile("resources/Ahri_dance.anm");
+	m.SetAnimation(&anm);
 
 	glm::mat4 projection = glm::perspective(45.0f, 1024.0f / 768.0f, 0.1f, 1000.0f);
 
-	Shader shader("resources/shaders/vertex.vert", "resources/shaders/fragment.frag");
+	//Shader shader("resources/shaders/vertex.vert", "resources/shaders/fragment.frag");
+	Shader shader("resources/shaders/animated.vert", "resources/shaders/animated.frag");
+
+	glClearColor(0.4f, 0.596f, 1.0f, 0.0f);
 
     while (!glfwWindowShouldClose(window))
     {

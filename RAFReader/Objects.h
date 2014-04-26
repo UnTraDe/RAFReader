@@ -11,10 +11,11 @@ struct Vertex
 
 struct Bone
 {
-	//char boneName[32];
-	int parent;
-	float scale;
-	float matrix[12];
+	short id;
+	short parent;
+	float position[3];
+	float quaternion[4];
+	char name[32];
 };
 
 struct AnimationPos
