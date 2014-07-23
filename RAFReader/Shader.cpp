@@ -3,117 +3,107 @@
 
 Shader::Shader()
 {
-    
+
 }
 
-Shader::Shader(const char *pathVertex, const char *pathFragment)
+Shader::Shader(const char* pathVertex, const char* pathFragment)
 {
-    load(pathVertex, pathFragment);
+	LoadFromFile(pathVertex, pathFragment);
 }
 
-bool Shader::load(const char *pathVertex, const char *pathFragment)
+bool Shader::LoadFromFile(const char *pathVertex, const char *pathFragment)
 {
-    vertexShaderObj = glCreateShader(GL_VERTEX_SHADER);
-    fragmentShaderObj = glCreateShader(GL_FRAGMENT_SHADER);
-    program = glCreateProgram();
+	m_VertexShaderObj = glCreateShader(GL_VERTEX_SHADER);
+	m_FragmentShaderObj = glCreateShader(GL_FRAGMENT_SHADER);
+	m_Program = glCreateProgram();
+	std::ifstream fileVer;
+	std::ifstream fileFrag;
+	fileVer.open(pathVertex);
 
-    std::ifstream fileVer;
-    std::ifstream fileFrag;
+	if (fileVer.is_open())
+	{
+		std::string buffer;
 
-    fileVer.open(pathVertex);
+		while (fileVer.good())
+		{
+			std::getline(fileVer, buffer);
+			m_VertexSource.append(buffer + "\n");
 
-    if(fileVer.is_open())
-    {
-        std::string buffer;
+		}
 
-        while(fileVer.good())
-        {
-            std::getline(fileVer, buffer);
-            vertexSource.append(buffer + "\n");
-            
-        }
+		fileVer.close();
+	}
+	else
+	{
+		std::cout << "Cannot open shader file: " << pathVertex << std::endl;
+		return false;
+	}
 
-        fileVer.close();
-    }
-    else
-    {
-        std::cout << "Cannot open shader file: " << pathVertex << std::endl;
-        return false;
-    }
+	fileFrag.open(pathFragment);
 
-    fileFrag.open(pathFragment);
-    if(fileFrag.is_open())
-    {
-        std::string buffer;
+	if (fileFrag.is_open())
+	{
+		std::string buffer;
 
-        while(fileFrag.good())
-        {
-            getline(fileFrag, buffer);
-            fragmentSource.append(buffer + "\n");
-        }
-        
-        fileFrag.close();
-    }
-    else
-    {
-        std::cout << "Cannot open shader file: " << pathFragment << std::endl;
-        return false;
-    }
+		while (fileFrag.good())
+		{
+			getline(fileFrag, buffer);
+			m_FragmentSource.append(buffer + "\n");
+		}
 
-    const char *vP = vertexSource.c_str();
-    const char *vF = fragmentSource.c_str();
+		fileFrag.close();
+	}
+	else
+	{
+		std::cout << "Cannot open shader file: " << pathFragment << std::endl;
+		return false;
+	}
 
-    GLint length = vertexSource.length();
+	const char *vP = m_VertexSource.c_str();
+	const char *vF = m_FragmentSource.c_str();
 
-    glShaderSource(vertexShaderObj, 1, &vP, NULL);
+	glShaderSource(m_VertexShaderObj, 1, &vP, NULL);
+	glCompileShader(m_VertexShaderObj);
+	GLint Result;
+	GLint InfoLogLength;
+	glGetShaderiv(m_VertexShaderObj, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(m_VertexShaderObj, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	std::vector<char> VertexShaderErrorMessage(InfoLogLength);
+	glGetShaderInfoLog(m_VertexShaderObj, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+	printf("Shader (Vertex): %s\n", &VertexShaderErrorMessage[0]);
 
-   
-
-    glShaderSource(fragmentShaderObj, 1, &vF, NULL);
-
-    glCompileShader(vertexShaderObj);
-
-    GLint Result;
-    GLint InfoLogLength;
-
-	glGetShaderiv(vertexShaderObj, GL_COMPILE_STATUS, &Result);
-	glGetShaderiv(vertexShaderObj, GL_INFO_LOG_LENGTH, &InfoLogLength);
-    std::vector<char> VertexShaderErrorMessage(InfoLogLength);
-	glGetShaderInfoLog(vertexShaderObj, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
-    fprintf(stdout, "%s\n", &VertexShaderErrorMessage[0]);
-
-    glCompileShader(fragmentShaderObj);
-
-	glGetShaderiv(fragmentShaderObj, GL_COMPILE_STATUS, &Result);
-	glGetShaderiv(fragmentShaderObj, GL_INFO_LOG_LENGTH, &InfoLogLength);
-	std::vector<char> FragmentShaderErrorMessage(InfoLogLength);
-	glGetShaderInfoLog(fragmentShaderObj, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
-	fprintf(stdout, "%s\n", &FragmentShaderErrorMessage[0]);
-
-    glAttachShader(program, vertexShaderObj);
-    glAttachShader(program, fragmentShaderObj);
-
-    glLinkProgram(program);
-
-    glDeleteShader(vertexShaderObj);
-    glDeleteShader(fragmentShaderObj);
-
-    return true;
+	glShaderSource(m_FragmentShaderObj, 1, &vF, NULL);
+	glCompileShader(m_FragmentShaderObj);
+	glGetShaderiv(m_FragmentShaderObj, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(m_FragmentShaderObj, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	VertexShaderErrorMessage = std::vector<char>(InfoLogLength);
+	glGetShaderInfoLog(m_FragmentShaderObj, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+	printf("Shader (Fragment): %s\n", &VertexShaderErrorMessage[0]);
+	
+	glAttachShader(m_Program, m_VertexShaderObj);
+	glAttachShader(m_Program, m_FragmentShaderObj);
+	glLinkProgram(m_Program);
+	glDeleteShader(m_VertexShaderObj);
+	glDeleteShader(m_FragmentShaderObj);
+	return true;
 }
 
-void Shader::bind()
+void Shader::Bind()
 {
-    glUseProgram(program);
+	glUseProgram(m_Program);
 }
 
-void Shader::release()
+void Shader::Release()
 {
-    glUseProgram(0);
+	glUseProgram(0);
 }
 
-GLuint Shader::getUniformLocation(const char *name)
+GLuint Shader::GetUniformLocation(const char *name)
 {
-    return glGetUniformLocation(program, name);
+	GLuint loc = glGetUniformLocation(m_Program, name);
+
+	if (loc == -1)
+		printf("Cannot find uniform location: %s \n", name);
+
+	return loc;
 }
-
-

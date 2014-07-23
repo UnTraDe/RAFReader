@@ -1,24 +1,28 @@
 #pragma once
-#include <GL/glew.h>
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
+#include <GL/glew.h>
 
-class Shader 
+#include <assert.h>
+
+class Shader
 {
 public:
-    Shader();
-    Shader(const char *pathVertex, const char *pathFragment);
-    bool load(const char *pathVertex, const char *pathFragment);
-    void bind();
-    void release();
-    GLuint getUniformLocation(const char *name);
+	Shader();
+	Shader(const char* pathVertex, const char* pathFragment);
+	bool LoadFromFile(const char *pathVertex, const char *pathFragment);
+	void Bind();
+	void Release();
+	GLuint GetUniformLocation(const char* name);
+	GLuint GetProgram() { return m_Program; }
 
 private:
-    GLuint program;
-    GLuint vertexShaderObj;
-    GLuint fragmentShaderObj;
-    std::string vertexSource;
-    std::string fragmentSource;
+	GLuint m_Program;
+	GLuint m_VertexShaderObj;
+	GLuint m_FragmentShaderObj;
+	std::string m_VertexSource;
+	std::string m_FragmentSource;
 };

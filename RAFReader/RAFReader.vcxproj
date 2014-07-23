@@ -79,9 +79,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Config.cpp" />
+    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelParser.cpp" />
@@ -89,17 +88,13 @@
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="Engine.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelParser.h" />
     <ClInclude Include="Objects.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Utilities.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Animation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

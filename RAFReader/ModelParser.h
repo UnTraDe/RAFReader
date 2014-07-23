@@ -4,17 +4,18 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <memory>
 #include "Objects.h"
 #include "Model.h"
-#include "Skeleton.h"
 
 using namespace std;
 
-Model ModelFromFiles(char *sknPath, char *sklPath);
+class ModelParser
+{
+public:
+	static std::shared_ptr<Model> ParseModel(std::string filePath);
+	static std::shared_ptr<Model> ParseModel(const char* memory);
+};
 
-Model parseSKN(char *memory);
-Model parseSKNFromFile(char *path);
-Skeleton parseSKL(char *memory);
-Skeleton parseSKLFromFile(char *path);
-Animation parseANM(char *memory);
-Animation parseANMFromFile(char *memory);
+
+
