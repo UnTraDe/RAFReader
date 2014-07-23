@@ -21,7 +21,7 @@ void Config::LoadConfig()
 		memset(buffer, 0, sizeof(buffer));
 		file.getline(buffer, sizeof(buffer));
 		std::string line(buffer);
-		std::vector<std::string> result = split(line, '=');
+		std::vector<std::string> result = StringUtils::Split(line, '=');
 		mConfig[result[0]] = result[1];
 	} while (!file.eof());
 

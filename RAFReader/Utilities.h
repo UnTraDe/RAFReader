@@ -4,5 +4,9 @@
 #include <vector>
 #include <sstream>
 
-std::vector<std::string> split(std::string s, char delimiter);
-std::vector<std::string> split(char *s, char delimiter);
+class StringUtils
+{
+public:
+	static std::vector<std::string> Split(std::string s, char delimiter);
+	static std::vector<std::string> Split(char *s, char delimiter);
+};

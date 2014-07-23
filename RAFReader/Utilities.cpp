@@ -1,6 +1,6 @@
 #include "Utilities.h"
 
-std::vector<std::string> split(std::string s, char delimiter)
+std::vector<std::string> StringUtils::Split(std::string s, char delimiter)
 {
     std::vector<std::string> list;
     std::istringstream f(s);
@@ -12,7 +12,7 @@ std::vector<std::string> split(std::string s, char delimiter)
     return list;
 }
 
-std::vector<std::string> split(char *s, char delimiter)
+std::vector<std::string> StringUtils::Split(char *s, char delimiter)
 {
 	std::string x(s);
     std::vector<std::string> list;
