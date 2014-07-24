@@ -43,8 +43,8 @@ void Engine::Initialize()
 
 	/* Load Models */
 
-	m = ModelParser::ParseModel(std::string("resources/Ahri.skn"));
-	mstextureID = SOIL_load_OGL_texture("resources/Ahri_base_TX_CM.dds", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+	m = ModelParser::ParseModel(std::string("resources/Ahri_Skin04.skn"));
+	mstextureID = SOIL_load_OGL_texture("resources/Ahri_Skin04_TX_CM.dds", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
 	m->ApplyTexture(mstextureID);
 }
 
@@ -69,7 +69,7 @@ void Engine::Render()
 	glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
 	glm::mat4 projection = glm::perspective(45.0f, (float)WINDOW_WIDTH / WINDOW_HEIGH, 0.1f, 1000.0f);
-	glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 70.0f, 220.0f), glm::vec3(0.0f, 70.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 view = glm::lookAt(glm::vec3(0.0f, 200.0f, 100.0f), glm::vec3(0.0f, 90.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	m->Render(projection, view, m_defaultShader);
 }
