@@ -35,7 +35,7 @@ void Engine::Initialize()
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
-	glClearColor(0.4f, 0.596f, 1.0f, 0.0f);
+	glClearColor(0.4f, 0.596f, 1.0f, 1.0f);
 
 	/* Load Shaders */
 
