@@ -2,6 +2,7 @@
 
 uniform mat4 MVP;
 uniform vec3 lightSource = vec3(0.0f, 300.0f, 400.0f);
+uniform mat4 bones[81];
 
 layout(location = 0) in vec3 position;
 layout(location = 1) in int boneIndex;

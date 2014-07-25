@@ -43,6 +43,8 @@ void Engine::Initialize()
 
 	/* Load Models */
 
+	std::shared_ptr<Skeleton> skl = ModelParser::ParseSkeleton(std::string("resources/Ahri_Skin04.skl"));
+
 	m = ModelParser::ParseModel(std::string("resources/Ahri_Skin04.skn"));
 	mstextureID = SOIL_load_OGL_texture("resources/Ahri_Skin04_TX_CM.dds", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
 	m->ApplyTexture(mstextureID);
